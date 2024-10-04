@@ -31,12 +31,45 @@ Node *Algorithms::buildTree(const int x, const int y, const maze &maze, nodes &n
     return nodes[y][x];
 }
 
+std::vector<Node *> Algorithms::bfs(Node *start, const Node *finish) {
+    std::queue<Node *> set;
+    std::unordered_set<Node *> visited;
+    std::unordered_map<Node *, Node *> parentOf;
+
+    set.push(start);
+
+    while (!set.empty()) {
+        Node *current = set.front();
+        set.pop();
+
+        if (current == finish) {
+            std::vector<Node *> path;
+            for (Node *node = current; node != nullptr; node = parentOf[node])
+                path.push_back(node);
+            std::ranges::reverse(path);
+            return path;
+        }
+
+        visited.insert(current);
+
+        for (const auto& children : current->getChildrens()) {
+            if (visited.contains(children))
+                continue;
+
+            set.push(children);
+            parentOf[children] = current;
+        }
+    }
+
+    return {};
+}
+
 double Algorithms::euclideanDistance(const Node *a, const Node *b) {
     return std::sqrt(std::pow(b->x() - a->x(), 2) + std::pow(b->y() - a->y(), 2));
 }
 
 std::vector<Node *> Algorithms::aStar(Node *start, const Node *finish) {
-    std::priority_queue<AStarNode, std::vector<AStarNode>, std::greater<> > set;
+    std::priority_queue<AStarNode, std::deque<AStarNode>, std::greater<> > set;
     std::unordered_set<Node *> visited;
     std::unordered_map<Node *, Node *> parentOf;
     std::unordered_map<Node *, int> gOf;
@@ -69,39 +102,6 @@ std::vector<Node *> Algorithms::aStar(Node *start, const Node *finish) {
 
             set.emplace(children, g, euclideanDistance(children, finish));
             gOf[children] = g;
-            parentOf[children] = current;
-        }
-    }
-
-    return {};
-}
-
-std::vector<Node *> Algorithms::bfs(Node *start, const Node *finish) {
-    std::queue<Node *, std::vector<Node *>> set;
-    std::unordered_set<Node *> visited;
-    std::unordered_map<Node *, Node *> parentOf;
-
-    set.emplace(start, 0, euclideanDistance(start, finish));
-
-    while (!set.empty()) {
-        Node *current = set.front();
-        set.pop();
-
-        if (current == finish) {
-            std::vector<Node *> path;
-            for (Node *node = current; node != nullptr; node = parentOf[node])
-                path.push_back(node);
-            std::ranges::reverse(path);
-            return path;
-        }
-
-        visited.insert(current);
-
-        for (const auto& children : current->getChildrens()) {
-            if (visited.contains(children))
-                continue;
-
-            set.push(children);
             parentOf[children] = current;
         }
     }

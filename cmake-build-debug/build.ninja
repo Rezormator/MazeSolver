@@ -79,6 +79,12 @@ build CMakeFiles/MazeBFS.dir/AStarNode.cpp.obj: CXX_COMPILER__MazeBFS_unscanned_
   OBJECT_DIR = CMakeFiles\MazeBFS.dir
   OBJECT_FILE_DIR = CMakeFiles\MazeBFS.dir
 
+build CMakeFiles/MazeBFS.dir/Input.cpp.obj: CXX_COMPILER__MazeBFS_unscanned_Debug D$:/Projects/Algorithms/MazeBFS/Input.cpp || cmake_object_order_depends_target_MazeBFS
+  DEP_FILE = CMakeFiles\MazeBFS.dir\Input.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\MazeBFS.dir
+  OBJECT_FILE_DIR = CMakeFiles\MazeBFS.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target MazeBFS
@@ -87,7 +93,7 @@ build CMakeFiles/MazeBFS.dir/AStarNode.cpp.obj: CXX_COMPILER__MazeBFS_unscanned_
 #############################################
 # Link the executable MazeBFS.exe
 
-build MazeBFS.exe: CXX_EXECUTABLE_LINKER__MazeBFS_Debug CMakeFiles/MazeBFS.dir/main.cpp.obj CMakeFiles/MazeBFS.dir/Maze.cpp.obj CMakeFiles/MazeBFS.dir/Node.cpp.obj CMakeFiles/MazeBFS.dir/Algorithms.cpp.obj CMakeFiles/MazeBFS.dir/AStarNode.cpp.obj
+build MazeBFS.exe: CXX_EXECUTABLE_LINKER__MazeBFS_Debug CMakeFiles/MazeBFS.dir/main.cpp.obj CMakeFiles/MazeBFS.dir/Maze.cpp.obj CMakeFiles/MazeBFS.dir/Node.cpp.obj CMakeFiles/MazeBFS.dir/Algorithms.cpp.obj CMakeFiles/MazeBFS.dir/AStarNode.cpp.obj CMakeFiles/MazeBFS.dir/Input.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\MazeBFS.dir

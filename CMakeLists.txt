@@ -13,4 +13,6 @@ add_executable(MazeBFS main.cpp
         Algorithms.h
         Algorithms.cpp
         AStarNode.h
-        AStarNode.cpp)
+        AStarNode.cpp
+        Input.cpp
+        Input.cpp)

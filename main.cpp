@@ -1,54 +1,62 @@
 #include <iostream>
 #include <vector>
 #include <random>
+#include "Input.h"
 #include "Maze.h"
 #include "Node.h"
 #include "Algorithms.h"
 
-constexpr Point START_POINT = {13, 3};
-constexpr Point FINISH_POINT = {75, 53};
-constexpr int MAZE_SIZE = 99;
+constexpr int BFS_METHOD = 0;
+constexpr int A_STAR_METHOD = 1;
 
 int main() {
-    getchar();
-    std::random_device rd;
-    std::default_random_engine rng(rd());
-    auto maze = Maze::createStartMaze(MAZE_SIZE, START_POINT);
-    Maze::generateMaze(maze, START_POINT, rng);
-    Maze::printMaze(maze, START_POINT, FINISH_POINT);
+    const auto mazeSize = Input::inputInt("Enter maze size: ");
+    const auto xStart = Input::inputInt("Enter x coordinate of start: ");
+    const auto yStart = Input::inputInt("Enter y coordinate of start: ");
+    Point start(xStart, yStart);
+
+    auto maze = Maze::createStartMaze(mazeSize, start);
+    Maze::printMaze(maze, start);
     getchar();
 
-    std::vector nodes(MAZE_SIZE, std::vector<Node *>(MAZE_SIZE, nullptr));
-    const auto root = Algorithms::mazeToTree(Node(START_POINT), maze, nodes);
+    const auto xFinish = Input::inputInt("Enter x coordinate of finish: ");
+    const auto yFinish = Input::inputInt("Enter y coordinate of finish: ");
+    Point finish(xFinish, yFinish);
+
+    Maze::printMaze(maze, start, finish, true);
+    getchar();
+
+    const auto solvingMethod = Input::indexMenu({"BFS solver", "A* solver"});
+
+    Maze::printMaze(maze, start, finish, true);
+    std::cout << "Solving with " << (solvingMethod == BFS_METHOD ? "BFS" : "A*") << " method..." << std::endl;
+
+    std::vector nodes(mazeSize, std::vector<Node *>(mazeSize, nullptr));
+    const auto root = Algorithms::mazeToTree(Node(start), maze, nodes);
 
     // std::vector<std::vector<bool>> visited(MAZE_SIZE, std::vector<bool>(MAZE_SIZE, false));
     // root->printTree(MAZE_SIZE);
     // getchar();
 
-    Node *goal = nodes[FINISH_POINT.y][FINISH_POINT.x];
+    const auto finishNode = nodes[finish.y][finish.x];
 
-    std::vector<Node *> aStarPath = Algorithms::aStar(root, goal);
-    // Виведення знайденого шляху A*
-    // std::cout << "Path found by A*:\n";
-    for (const Node *node: aStarPath) {
-        // std::cout << "(" << node->x() << ", " << node->y() << ") ";
+    const auto path = solvingMethod == BFS_METHOD
+                          ? Algorithms::bfs(root, finishNode)
+                          : Algorithms::aStar(root, finishNode);
+
+    for (const Node *node: path)
         maze[node->y()][node->x()] = WAY;
-    }
     std::cout << "\n";
 
-    Maze::printMaze(maze, START_POINT, FINISH_POINT);
-    getchar();
+    Maze::printMaze(maze, start, finish, true);
 
-    // // Виконання алгоритму BFS
-    // std::vector<Node*> bfsPath = bfs(root, goal);
-    // // Виведення знайденого шляху BFS
-    // std::cout << "Path found by BFS:\n";
-    // for (Node* node : bfsPath) {
-    //     std::cout << "(" << node->x << ", " << node->y << ") ";
-    // }
-    // std::cout << "\n";
+    std::cout << "Path fined by " << (solvingMethod == BFS_METHOD ? "BFS" : "A*") << " method:" << std::endl;
+    for (const Node *node: path)
+        std::cout << "(" << node->x() << ", " << node->y() << ") -> ";
+    std::cout << "\n";
 
     Node::clearNodes(nodes);
+    getchar();
 
     return 0;
 }
