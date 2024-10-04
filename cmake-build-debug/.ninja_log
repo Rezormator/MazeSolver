@@ -1,0 +1,11 @@
+# ninja log v6
+2308	3109	7497404366270450	MazeBFS.exe	9fc31640fb7764bf
+4	1429	7497469739473229	CMakeFiles/MazeBFS.dir/main.cpp.obj	1ba676f22ffc410e
+58	1491	7495778275954274	CMakeFiles/MazeBFS.dir/MazeGenerator.cpp.obj	4ef158504db5b64d
+4	1282	7497471055591682	CMakeFiles/MazeBFS.dir/Maze.cpp.obj	45bf4260bba0a205
+68	1961	7497469740106751	CMakeFiles/MazeBFS.dir/Node.cpp.obj	8e44bab45bfba242
+99	2254	7497466799780216	CMakeFiles/MazeBFS.dir/Algorithms.cpp.obj	a1f7983837df3f1f
+175	2122	7497469741178570	CMakeFiles/MazeBFS.dir/AStarNode.cpp.obj	6d361624467eaa5a
+4	1197	7497472404860923	CMakeFiles/MazeBFS.dir/Maze.cpp.obj	45bf4260bba0a205
+44	1765	7497472405258228	CMakeFiles/MazeBFS.dir/Algorithms.cpp.obj	baaa56c2e9f669d1
+1765	2399	7497472422471222	MazeBFS.exe	9fc31640fb7764bf
