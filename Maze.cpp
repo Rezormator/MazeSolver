@@ -25,7 +25,7 @@ void Maze::generateMaze(maze& maze, const Point startPoint, dre& rng) {
 
         maze[newPoint.y][newPoint.x] = PATH;
         maze[startPoint.y + dy / 2][startPoint.x + dx / 2] = PATH;
-        printMaze(maze);
+        // printMaze(maze);
         generateMaze(maze, newPoint, rng);
     }
 }
