@@ -21,17 +21,20 @@ Node *Algorithms::buildTree(const int x, const int y, const maze &maze, nodes &n
 
     if (x > 0 && maze[y][x - 1] == PATH)
         nodes[y][x]->addChildren(buildTree(x - 1, y, maze, nodes));
+
     if (x < maze.size() - 1 && maze[y][x + 1] == PATH)
         nodes[y][x]->addChildren(buildTree(x + 1, y, maze, nodes));
+
     if (y > 0 && maze[y - 1][x] == PATH)
         nodes[y][x]->addChildren(buildTree(x, y - 1, maze, nodes));
+
     if (y < maze.size() - 1 && maze[y + 1][x] == PATH)
         nodes[y][x]->addChildren(buildTree(x, y + 1, maze, nodes));
 
     return nodes[y][x];
 }
 
-std::vector<Node *> Algorithms::bfs(Node *start, const Node *finish) {
+std::vector<Node *> Algorithms::bfs(Node *start, const Node *finish, int &iterationsCount, int &visitedCount) {
     std::queue<Node *> set;
     std::unordered_set<Node *> visited;
     std::unordered_map<Node *, Node *> parentOf;
@@ -39,6 +42,7 @@ std::vector<Node *> Algorithms::bfs(Node *start, const Node *finish) {
     set.push(start);
 
     while (!set.empty()) {
+        iterationsCount++;
         Node *current = set.front();
         set.pop();
 
@@ -51,8 +55,10 @@ std::vector<Node *> Algorithms::bfs(Node *start, const Node *finish) {
         }
 
         visited.insert(current);
+        visitedCount++;
 
         for (const auto& children : current->getChildrens()) {
+            iterationsCount++;
             if (visited.contains(children))
                 continue;
 
@@ -68,7 +74,7 @@ double Algorithms::euclideanDistance(const Node *a, const Node *b) {
     return std::sqrt(std::pow(b->x() - a->x(), 2) + std::pow(b->y() - a->y(), 2));
 }
 
-std::vector<Node *> Algorithms::aStar(Node *start, const Node *finish) {
+std::vector<Node *> Algorithms::aStar(Node *start, const Node *finish, int &iterationsCount, int &visitedCount) {
     std::priority_queue<AStarNode, std::deque<AStarNode>, std::greater<> > set;
     std::unordered_set<Node *> visited;
     std::unordered_map<Node *, Node *> parentOf;
@@ -78,6 +84,7 @@ std::vector<Node *> Algorithms::aStar(Node *start, const Node *finish) {
     gOf[start] = 0;
 
     while (!set.empty()) {
+        iterationsCount++;
         Node *current = set.top().getNode();
         set.pop();
 
@@ -90,8 +97,10 @@ std::vector<Node *> Algorithms::aStar(Node *start, const Node *finish) {
         }
 
         visited.insert(current);
+        visitedCount++;
 
         for (const auto& children : current->getChildrens()) {
+            iterationsCount++;
             if (visited.contains(children))
                 continue;
 

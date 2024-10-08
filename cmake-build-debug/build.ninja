@@ -95,6 +95,7 @@ build CMakeFiles/MazeBFS.dir/Input.cpp.obj: CXX_COMPILER__MazeBFS_unscanned_Debu
 
 build MazeBFS.exe: CXX_EXECUTABLE_LINKER__MazeBFS_Debug CMakeFiles/MazeBFS.dir/main.cpp.obj CMakeFiles/MazeBFS.dir/Maze.cpp.obj CMakeFiles/MazeBFS.dir/Node.cpp.obj CMakeFiles/MazeBFS.dir/Algorithms.cpp.obj CMakeFiles/MazeBFS.dir/AStarNode.cpp.obj CMakeFiles/MazeBFS.dir/Input.cpp.obj
   FLAGS = -g
+  LINK_FLAGS = -Wl,--stack,8388608
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\MazeBFS.dir
   POST_BUILD = cd .
