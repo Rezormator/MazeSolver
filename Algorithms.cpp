@@ -5,12 +5,13 @@
 #include <unordered_set>
 #include <algorithm>
 #include <ranges>
+#include <iostream>
 
-Node *Algorithms::mazeToTree(const Node &start, const maze &maze, nodes &nodes) {
-    return buildTree(start.x(), start.y(), maze, nodes);
+Node *Algorithms::mazeToGraph(const Node &start, const maze &maze, nodes &nodes) {
+    return buildGraph(start.x(), start.y(), maze, nodes);
 }
 
-Node *Algorithms::buildTree(const int x, const int y, const maze &maze, nodes &nodes) {
+Node *Algorithms::buildGraph(const int x, const int y, const maze &maze, nodes &nodes) {
     if (maze[y][x] != PATH)
         return nullptr;
 
@@ -20,16 +21,16 @@ Node *Algorithms::buildTree(const int x, const int y, const maze &maze, nodes &n
     nodes[y][x] = new Node(Point(x, y));
 
     if (x > 0 && maze[y][x - 1] == PATH)
-        nodes[y][x]->addChildren(buildTree(x - 1, y, maze, nodes));
+        nodes[y][x]->addChildren(buildGraph(x - 1, y, maze, nodes));
 
     if (x < maze.size() - 1 && maze[y][x + 1] == PATH)
-        nodes[y][x]->addChildren(buildTree(x + 1, y, maze, nodes));
+        nodes[y][x]->addChildren(buildGraph(x + 1, y, maze, nodes));
 
     if (y > 0 && maze[y - 1][x] == PATH)
-        nodes[y][x]->addChildren(buildTree(x, y - 1, maze, nodes));
+        nodes[y][x]->addChildren(buildGraph(x, y - 1, maze, nodes));
 
     if (y < maze.size() - 1 && maze[y + 1][x] == PATH)
-        nodes[y][x]->addChildren(buildTree(x, y + 1, maze, nodes));
+        nodes[y][x]->addChildren(buildGraph(x, y + 1, maze, nodes));
 
     return nodes[y][x];
 }
@@ -45,6 +46,14 @@ std::vector<Node *> Algorithms::bfs(Node *start, const Node *finish, int &iterat
         iterationsCount++;
         Node *current = set.front();
         set.pop();
+
+        // std::cout << "Node: (" << current->x() << "; " << current->y() << ")" << std::endl;
+        // if (!parentOf.empty())
+        //     std::cout << "Come from node: (" << parentOf[current]->x() << "; " << parentOf[current]->y() << ")" << std::endl;
+        // int depth = 0;
+        // for (Node *node = current; node != nullptr; node = parentOf[node])
+        //     depth++;
+        // std::cout << "Node depth: " << depth << std::endl;
 
         if (current == finish) {
             std::vector<Node *> path;
@@ -87,6 +96,13 @@ std::vector<Node *> Algorithms::aStar(Node *start, const Node *finish, int &iter
         iterationsCount++;
         Node *current = set.top().getNode();
         set.pop();
+
+        // std::cout << "Node: (" << current->x() << "; " << current->y() << ")" << std::endl;
+        // if (!parentOf.empty())
+        //     std::cout << "Come from node: (" << parentOf[current]->x() << "; " << parentOf[current]->y() << ")" << std::endl;
+        // std::cout << "Node g: " << gOf[current] << std::endl;
+        // std::cout << "Node h: " << euclideanDistance(current, finish) << std::endl;
+        // std::cout << "Node f: " << gOf[current] + euclideanDistance(current, finish) << std::endl;
 
         if (current == finish) {
             std::vector<Node *> path;

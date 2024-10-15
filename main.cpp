@@ -25,7 +25,7 @@ int main() {
     //     auto maze = Maze::createStartMaze(mazeSize, start);
     //     const Point finish(7 + i * 10, 7 + i * 10);
     //     std::vector nodes(mazeSize, std::vector<Node *>(mazeSize, nullptr));
-    //     const auto root = Algorithms::mazeToTree(Node(start), maze, nodes);
+    //     const auto root = Algorithms::mazeToGraph(Node(start), maze, nodes);
     //     const auto finishNode = nodes[finish.y][finish.x];
     //     std::unordered_set<Node *> visited = {nodes[1][1]};
     //     nodesCount.push_back(root->countNodes(visited));
@@ -82,7 +82,7 @@ int main() {
         Maze::printMaze(maze, start, finish, true);
 
         std::vector nodes(mazeSize, std::vector<Node *>(mazeSize, nullptr));
-        const auto root = Algorithms::mazeToTree(Node(start), maze, nodes);
+        const auto graph = Algorithms::mazeToGraph(Node(start), maze, nodes);
         const auto finishNode = nodes[finish.y][finish.x];
 
         // std::vector<std::vector<bool>> visited(MAZE_SIZE, std::vector<bool>(MAZE_SIZE, false));
@@ -90,15 +90,15 @@ int main() {
         // getchar();
 
         std::unordered_set<Node *> visited = {nodes[1][1]};
-        const auto nodesCount = root->countNodes(visited);
+        const auto nodesCount = graph->countNodes(visited);
         int iterationsCount = 0;
         int visitedCount = 0;
 
         std::cout << "Solving with " << (solvingMethod == BFS_METHOD ? "BFS" : "A*") << " method..." << std::endl;
         auto startTime = std::chrono::high_resolution_clock::now();
         const auto path = solvingMethod == BFS_METHOD
-                              ? Algorithms::bfs(root, finishNode, iterationsCount, visitedCount)
-                              : Algorithms::aStar(root, finishNode, iterationsCount, visitedCount);
+                              ? Algorithms::bfs(graph, finishNode, iterationsCount, visitedCount)
+                              : Algorithms::aStar(graph, finishNode, iterationsCount, visitedCount);
         auto endTime = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> time = endTime - startTime;
 

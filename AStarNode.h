@@ -7,9 +7,9 @@
 class AStarNode {
 private:
     Node *node;
-    double g; // Відстань від стартового вузла
-    double h; // Оцінка відстані до цільового вузла
-    double f; // g + h (сумарна вартість)
+    double g;
+    double h;
+    double f;
 public:
     AStarNode(Node *n, double g, double h);
 
